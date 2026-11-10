@@ -366,3 +366,77 @@ WHERE TABLE_SCHEMA = DATABASE()
         'admin_eventos_processados'
     );
 
+-- Inserts
+
+-- 1. Criação de Usuários (1 Admin, 1 Mentor e 1 Mentorado)
+INSERT INTO ADMIN_USUARIOS (USUARIO_UUID, NOME, EMAIL, PERFIL, STATUS_ACESSO) VALUES
+('b3f1c1a0-e345-4b11-9a73-5f04a6b2c890', 'Admin da Silva', 'admin@plataforma.com', 'ADMIN', 'ATIVO'),
+('f8d9b231-1e9a-4c22-b2a1-8d76e4c5f3b1', 'João Mentor', 'joao.mentor@email.com', 'MENTOR', 'ATIVO'),
+('a1b2c3d4-e5f6-4a11-8c7d-9e0f1a2b3c4d', 'Maria Mentorada', 'maria.dev@empresa.com', 'MENTORADO', 'ATIVO');
+
+
+-- 2. Perfil do Mentor (Vinculado ao ID 2 gerado acima)
+INSERT INTO ADMIN_MENTORES (MENTOR_UUID, USUARIO_ID, BIOGRAFIA, STATUS_APROVACAO, VALOR_HORA) VALUES
+('m-f8d9b231-1e9a-4c22-b2a1-8d76e4c5', 2, 'Tech Lead com 15 anos de experiência em arquitetura de microsserviços.', 'APROVADO', 180.00);
+
+
+-- 3. Criação de Tags de Especialidade
+INSERT INTO ADMIN_TAGS (TAG_UUID, NOME, CATEGORIA, STATUS) VALUES
+('t-00000001-e345-4b11-9a73-5f04a6b2', 'Arquitetura de Software', 'Hard Skill', 'ATIVA'),
+('t-00000002-e345-4b11-9a73-5f04a6b2', 'Liderança Técnica', 'Soft Skill', 'ATIVA');
+
+
+-- 4. Vinculando o Mentor às Tags (Mentor 1, Tags 1 e 2)
+INSERT INTO ADMIN_MENTOR_TAGS (MENTOR_ID, TAG_ID) VALUES
+(1, 1),
+(1, 2);
+
+
+-- 5. Criação de um Voucher para o Mentorado (ID 3)
+INSERT INTO ADMIN_VOUCHERS (VOUCHER_UUID, CODIGO, TIPO, QUANTIDADE_CREDITOS, CREDITOS_DISPONIVEIS, STATUS, VALIDADE, MENTORADO_UUID, USUARIO_ID) VALUES
+('v-a1b2c3d4-e5f6-4a11-8c7d-9e0f1a2b', 'B2B-TECH-2023', 'RESTRITO', 10, 9, 'ATIVO', '2024-12-31 23:59:59', 'a1b2c3d4-e5f6-4a11-8c7d-9e0f1a2b3c4d', 3);
+
+
+-- 6. Criação de uma Mentoria Concluída
+INSERT INTO ADMIN_MENTORIAS (MENTORIA_UUID, MENTORADO_UUID, MENTOR_UUID, MENTORADO_ID, MENTOR_ID, VOUCHER_ID, STATUS, DATA_CRIACAO_ORIGEM, DATA_AGENDADA) VALUES
+('mt-11223344-5566-7788-99aa-bbccdd', 'a1b2c3d4-e5f6-4a11-8c7d-9e0f1a2b3c4d', 'm-f8d9b231-1e9a-4c22-b2a1-8d76e4c5', 3, 1, 1, 'CONCLUIDA', '2023-11-01 10:00:00', '2023-11-10 14:00:00');
+
+
+-- 7. Registro do Consumo do Voucher na Mentoria acima
+INSERT INTO ADMIN_VOUCHER_MOVIMENTACOES (VOUCHER_ID, MENTORIA_ID, TIPO_MOVIMENTACAO, QUANTIDADE, SALDO_ANTERIOR, SALDO_POSTERIOR, REFERENCIA_UUID) VALUES
+(1, 1, 'CONSUMO', 1, 10, 9, 'ref-99887766-5544-3322-1100-aabbcc');
+
+
+-- 8. Solicitação de Troca de Mentor (Rejeitada/Pendente de exemplo)
+INSERT INTO ADMIN_SOLICITACOES_TROCA (SOLICITACAO_UUID, MENTORIA_ID, SOLICITANTE_UUID, SOLICITANTE_ID, JUSTIFICATIVA, STATUS_ADMIN, CRIADA_EM_ORIGEM) VALUES
+('sol-12345678-abcd-1234-abcd-123456', 1, 'a1b2c3d4-e5f6-4a11-8c7d-9e0f1a2b3c4d', 3, 'Gostaria de um mentor focado em front-end.', 'PENDENTE', '2023-11-02 09:00:00');
+
+
+-- 9. Registro da Sessão em Si (Aconteceu e ambos compareceram)
+INSERT INTO ADMIN_SESSOES (SESSAO_UUID, MENTORIA_ID, DATA_AGENDADA, STATUS, MENTOR_COMPARECEU, MENTORADO_COMPARECEU, DATA_CONCLUSAO) VALUES
+('ses-aabbccdd-eeff-0011-2233-445566', 1, '2023-11-10 14:00:00', 'CONCLUIDA', TRUE, TRUE, '2023-11-10 15:00:00');
+
+
+-- 10. Feedback do Mentorado sobre o Mentor
+INSERT INTO ADMIN_FEEDBACKS_MENTORADO (FEEDBACK_UUID, MENTORIA_ID, MENTOR_UUID, NOTA, SCORE_ESPECIALIDADE, COMENTARIO, ENVIADO_EM) VALUES
+('fbm-11111111-2222-3333-4444-555555', 1, 'm-f8d9b231-1e9a-4c22-b2a1-8d76e4c5', 10, 9, 'Mentor excelente! Esclareceu todas as dúvidas de microsserviços.', '2023-11-11 10:00:00');
+
+
+-- 11. Feedback do Mentor sobre o Mentorado
+INSERT INTO ADMIN_FEEDBACKS_MENTOR (FEEDBACK_UUID, MENTORIA_ID, MENTORADO_UUID, TEVE_NO_SHOW, NIVEL_ENGAJAMENTO, ALERTA_COMPORTAMENTO, ENVIADO_EM) VALUES
+('fbt-99999999-8888-7777-6666-555555', 1, 'a1b2c3d4-e5f6-4a11-8c7d-9e0f1a2b3c4d', FALSE, 9, NULL, '2023-11-10 15:30:00');
+
+
+-- 12. Notificação disparada para o Mentorado
+INSERT INTO ADMIN_NOTIFICACOES (NOTIFICACAO_UUID, TIPO_NOTIFICACAO, USUARIO_DESTINO_UUID, USUARIO_ID, STATUS, DATA_ENVIO) VALUES
+('not-abababab-cdcd-efef-1212-343434', 'SESSAO_CONCLUIDA', 'a1b2c3d4-e5f6-4a11-8c7d-9e0f1a2b3c4d', 3, 'ENVIADO', '2023-11-10 15:05:00');
+
+
+-- 13. Evento bruto na tabela de Analytics
+INSERT INTO ANALYTICS_EVENTOS (EVENTO_UUID, TIPO_EVENTO, AGREGADO_UUID, SERVICO_ORIGEM, DATA_HORA, DADOS) VALUES
+('evt-00001111-2222-3333-4444-555566', 'MentorshipCompleted', 'mt-11223344-5566-7788-99aa-bbccdd', 'MentorshipService', '2023-11-10 15:00:00', '{"mentorship_id": "mt-11223344-5566-7788-99aa-bbccdd", "duration_minutes": 60, "status": "COMPLETED"}');
+
+
+-- 14. Inbox de Eventos Processados (Deduplicação)
+INSERT INTO ADMIN_EVENTOS_PROCESSADOS (EVENTO_UUID, SERVICO_ORIGEM, TIPO_EVENTO, STATUS_PROCESSAMENTO, TENTATIVAS, PROCESSADO_EM) VALUES
+('evt-00001111-2222-3333-4444-555566', 'MentorshipService', 'MentorshipCompleted', 'PROCESSADO', 1, '2023-11-10 15:00:05');
