@@ -44,7 +44,7 @@ public class AdminMentores {
         name = "USUARIO_ID",
         foreignKey = @ForeignKey(name = "FK_ADMIN_MENTORES_USUARIO")
     )
-    private AdminUsuario usuario;
+    private AdminUsuarios usuario;
 
     @Column(name = "BIOGRAFIA", columnDefinition = "TEXT")
     private String biografia;
