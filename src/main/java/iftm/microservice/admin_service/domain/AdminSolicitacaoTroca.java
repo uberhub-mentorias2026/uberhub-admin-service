@@ -39,8 +39,6 @@ import lombok.ToString;
         @Index(name = "IX_ADMIN_SOLIC_TROCA_SOLICITANTE", columnList = "SOLICITANTE_ID")
     }
 )
-@Getter
-@Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
