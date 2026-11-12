@@ -39,6 +39,10 @@ import lombok.ToString;
         @Index(name = "IX_ADMIN_SOLIC_TROCA_SOLICITANTE", columnList = "SOLICITANTE_ID")
     }
 )
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
