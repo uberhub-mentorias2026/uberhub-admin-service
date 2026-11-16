@@ -2,37 +2,29 @@ package iftm.microservice.admin_service.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import iftm.microservice.admin_service.utils.StatusAprovacao;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity 
-@Data 
+@Entity
+@Data
 @Table(name = "ADMIN_MENTORES")
-@AllArgsConstructor 
-@NoArgsConstructor 
+@AllArgsConstructor
+@NoArgsConstructor
 public class AdminMentores {
-    
-    @Id 
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Integer id;
+    private Long id;
 
     @JdbcTypeCode(SqlTypes.CHAR)
     @Column(name = "MENTOR_UUID", length = 36, nullable = false)
@@ -47,7 +39,7 @@ public class AdminMentores {
 
     @Column(name = "BIOGRAFIA", columnDefinition = "TEXT")
     private String biografia;
-       
+
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS_APROVACAO", length = 20, nullable = false)
     private StatusAprovacao statusAprovacao = StatusAprovacao.PENDENTE;
@@ -55,13 +47,20 @@ public class AdminMentores {
     @Column(name = "VALOR_HORA", precision = 10, scale = 2)
     private BigDecimal valorHora;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "ADMIN_MENTOR_TAGS",
+        joinColumns = @JoinColumn(name = "MENTOR_ID"),
+        inverseJoinColumns = @JoinColumn(name = "TAG_ID")
+    )
+    private Set<AdminTags> tags = new HashSet<>();
+
     @Column(name = "ORIGEM_ATUALIZADO_EM")
     private LocalDateTime origemAtualizadoEm;
 
-    @Column(name = "CRIADO_EM", nullable = false)
+    @Column(name = "CRIADO_EM", nullable = false, insertable = false, updatable = false)
     private LocalDateTime criadoEm;
 
-    @Column(name = "ATUALIZADO_EM", nullable = false)
+    @Column(name = "ATUALIZADO_EM", nullable = false, insertable = false, updatable = false)
     private LocalDateTime atualizadoEm;
-
 }

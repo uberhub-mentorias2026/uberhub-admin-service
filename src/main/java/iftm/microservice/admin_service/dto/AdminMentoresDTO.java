@@ -1,9 +1,8 @@
-
 package iftm.microservice.admin_service.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.List;
 
 import iftm.microservice.admin_service.utils.StatusAprovacao;
 import lombok.Data;
@@ -15,15 +14,19 @@ public class AdminMentoresDTO {
 
     private Long id;
 
-    private UUID mentorUuid;
+    private String mentorUuid;
 
     private Long usuarioId;
+
+    private String nome;
 
     private String biografia;
 
     private StatusAprovacao statusAprovacao = StatusAprovacao.PENDENTE;
 
     private BigDecimal valorHora;
+
+    private List<String> tags;
 
     private LocalDateTime origemAtualizadoEm;
 
