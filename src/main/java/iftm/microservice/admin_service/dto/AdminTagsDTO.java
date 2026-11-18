@@ -1,10 +1,18 @@
 package iftm.microservice.admin_service.dto;
 
-import iftm.microservice.admin_service.domain.AdminTags; 
-import iftm.microservice.admin_service.utils.StatusTag;  
+import iftm.microservice.admin_service.domain.AdminTags;
+import iftm.microservice.admin_service.utils.StatusTag;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AdminTagsDTO {
 
     private String tagUuid;
@@ -17,45 +25,13 @@ public class AdminTagsDTO {
     @NotNull(message = "Campo obrigatório. Informe um status.")
     private StatusTag status;
 
-    public AdminTagsDTO() {
-    }
-
     public AdminTagsDTO(AdminTags adminTags) {
-        this.tagUuid = adminTags.getTag_uuid(); 
-        this.nome = adminTags.getName();        
+
+        this.tagUuid = adminTags.getTagUuid();
+        this.nome = adminTags.getName();
         this.categoria = adminTags.getCategoria();
         this.status = adminTags.getStatus();
+        
     }
 
-    public String getTagUuid() {
-        return tagUuid;
-    }
-
-    public void setTagUuid(String tagUuid) {
-        this.tagUuid = tagUuid;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public StatusTag getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusTag status) {
-        this.status = status;
-    }
 }

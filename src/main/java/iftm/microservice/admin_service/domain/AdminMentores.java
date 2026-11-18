@@ -2,8 +2,6 @@ package iftm.microservice.admin_service.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -47,14 +45,6 @@ public class AdminMentores {
     @Column(name = "VALOR_HORA", precision = 10, scale = 2)
     private BigDecimal valorHora;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "ADMIN_MENTOR_TAGS",
-        joinColumns = @JoinColumn(name = "MENTOR_ID"),
-        inverseJoinColumns = @JoinColumn(name = "TAG_ID")
-    )
-    private Set<AdminTags> tags = new HashSet<>();
-
     @Column(name = "ORIGEM_ATUALIZADO_EM")
     private LocalDateTime origemAtualizadoEm;
 
@@ -63,4 +53,5 @@ public class AdminMentores {
 
     @Column(name = "ATUALIZADO_EM", nullable = false, insertable = false, updatable = false)
     private LocalDateTime atualizadoEm;
+    
 }
