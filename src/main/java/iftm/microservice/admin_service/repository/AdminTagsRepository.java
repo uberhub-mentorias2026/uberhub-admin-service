@@ -12,8 +12,8 @@ import iftm.microservice.admin_service.utils.StatusTag;
 @Repository
 public interface AdminTagsRepository extends JpaRepository<AdminTags, Long>{
     
-    Optional<AdminTags> findByTag_uuid(String tagUuid);
-    boolean existsByTag_uuid(String tagUuid);
+    Optional<AdminTags> findByTagUuid(String tagUuid);
+    boolean existsByTagUuid(String tagUuid);
 
     boolean existsByNameAndCategoria(String name, String categoria);
 

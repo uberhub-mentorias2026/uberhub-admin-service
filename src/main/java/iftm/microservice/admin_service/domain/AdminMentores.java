@@ -2,6 +2,8 @@ package iftm.microservice.admin_service.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -53,5 +55,8 @@ public class AdminMentores {
 
     @Column(name = "ATUALIZADO_EM", nullable = false, insertable = false, updatable = false)
     private LocalDateTime atualizadoEm;
+
+    @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AdminMentorTags> mentorTags = new ArrayList<>();
     
 }
