@@ -16,6 +16,6 @@ public class MetricasDashboardDTO {
     private long mentoriasPendentes;
     private long mentoriasRealizadasNoMes;
     private long mentoresPendentes;
-    private long vouchersStatus;
+    private long vouchersAtivos;
     private Instant geradoEm;
 }

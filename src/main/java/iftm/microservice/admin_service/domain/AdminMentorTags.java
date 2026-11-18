@@ -50,5 +50,6 @@ public class AdminMentorTags {
         this.mentor = mentor;
         this.tag = tag;
         this.id = new AdminMentorTagId(mentor.getId(), tag.getId()); 
+    }
 
 }

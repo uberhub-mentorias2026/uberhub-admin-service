@@ -1,26 +1,41 @@
 package iftm.microservice.admin_service.service;
-
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
 
 import iftm.microservice.admin_service.dto.MetricasDashboardDTO;
+import iftm.microservice.admin_service.dto.mapper.DashboardMapper;
+import iftm.microservice.admin_service.repository.DashboardRepository;
+import lombok.AllArgsConstructor;
 
 @Service 
-//@AllArgsConstructor
+@AllArgsConstructor
 public class DashboardService {
 
-    public MetricasDashboardDTO buscarMetricas(){
-        //valores provisórios, trocar depois pelos valores vindos do repository
-       return MetricasDashboardDTO.builder()
-                .novosCadastros(18)
-                .mentoriasPendentes(10)
-                .mentoriasRealizadasNoMes(5)
-                .mentoresPendentes(7)
-                .vouchersStatus(8)
-                .geradoEm(Instant.now())
-                .build();
-    }
+    private final DashboardRepository repository;
+    private final DashboardMapper mapper;
+        
+    public MetricasDashboardDTO buscarMetricas() {
+    LocalDateTime agora = LocalDateTime.now();
+    LocalDateTime desde = agora.minusDays(7);
 
-    // builder protege contra trocar campos
+    long novosCadastros = repository.contarNovosCadastros(desde);
+    long mentoriasPendentes = repository.contarMentoriasPendentes();
+    //falta o grupo decidir qual data define a mentoria realizada no mês
+    long mentoriasRealizadasNoMes = 5;
+    long mentoresPendentes = repository.contarMentoresPendentes();
+    long vouchersAtivos = repository.contarVouchersAtivos(agora);
+
+
+    return mapper.toDto(
+        novosCadastros,
+        mentoriasPendentes,
+        mentoriasRealizadasNoMes,
+        mentoresPendentes,
+        vouchersAtivos);
 }
+
+
+}
+    
+
