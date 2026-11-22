@@ -27,6 +27,11 @@ public class MentorService {
         return mentorMapper.toDtoList(pendentes);
     }
 
+    public List<AdminMentoresDTO> listarTodosMentores() {
+        List<AdminMentores> todos = mentoresRepository.findAllWithDetails();
+        return mentorMapper.toDtoList(todos);
+    }
+
     @Transactional
     public AdminMentoresDTO avaliarMentor(Long id, AvaliacaoMentorDTO avaliacao) {
         // 1. Busca o mentor no banco

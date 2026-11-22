@@ -21,6 +21,15 @@ public interface AdminMentoresRepository extends JpaRepository<AdminMentores, Lo
     """)
     List<AdminMentores> findAllByStatusWithDetails(@Param("status") StatusAprovacao status);
 
+     @Query("""
+        SELECT DISTINCT m
+        FROM AdminMentores m
+        LEFT JOIN FETCH m.usuario u
+        LEFT JOIN FETCH m.mentorTags mt
+        LEFT JOIN FETCH mt.tag t
+        ORDER BY m.criadoEm ASC
+    """)
+    List<AdminMentores> findAllWithDetails();
     @Query("""
         SELECT DISTINCT m
         FROM AdminMentores m

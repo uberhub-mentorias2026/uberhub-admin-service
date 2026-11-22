@@ -23,7 +23,12 @@ import lombok.AllArgsConstructor;
 public class MentoresController {
 
     private final MentorService mentorService;
-
+    
+    @GetMapping
+    public ResponseEntity<List<AdminMentoresDTO>> listarTodosMentores() {
+        return ResponseEntity.ok(mentorService.listarTodosMentores());
+    }
+    
     @GetMapping("/pending")
     public ResponseEntity<List<AdminMentoresDTO>> buscarMentoresPendentes() {
         return ResponseEntity.ok(mentorService.buscarMentoresPendentes());
