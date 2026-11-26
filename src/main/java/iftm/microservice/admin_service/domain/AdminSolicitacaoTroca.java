@@ -21,6 +21,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -37,7 +40,9 @@ import lombok.ToString;
         @Index(name = "IX_ADMIN_SOLIC_TROCA_SOLICITANTE", columnList = "SOLICITANTE_ID")
     }
 )
-
+@Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
@@ -72,6 +77,7 @@ public class AdminSolicitacaoTroca {
     @Column(name = "JUSTIFICATIVA", nullable = false, columnDefinition = "TEXT")
     private String justificativa;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS_ADMIN", length = 15, nullable = false)
     private StatusSolicitacaoTroca statusAdmin = StatusSolicitacaoTroca.PENDENTE;
