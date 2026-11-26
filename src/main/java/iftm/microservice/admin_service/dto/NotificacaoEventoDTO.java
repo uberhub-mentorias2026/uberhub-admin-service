@@ -1,25 +1,23 @@
 package iftm.microservice.admin_service.dto;
 
-import java.time.LocalDateTime;
-import java.util.Map;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//Aqui é a entrada de Eventos na fila
+import java.time.LocalDateTime;
+import java.util.Map;
 
 @Getter
 @Setter
-@NoArgsConstructor 
-@AllArgsConstructor 
+@NoArgsConstructor
+@AllArgsConstructor
 public class NotificacaoEventoDTO {
-    private String eventoUuid;         
-    private String servicoOrigem;     
-    private String tipoNotificacao;    
-    private String usuarioDestinoUuid;
+
+    private String eventoUuid;          
+    private String servicoOrigem;       
+    private String tipoNotificacao;     
+    private String usuarioDestinoUuid;  
     private LocalDateTime dataHora;     
-    private Map<String, Object> dados;
-    
+    private Map<String, Object> dados;  
 }
