@@ -33,7 +33,8 @@ import lombok.ToString;
         @UniqueConstraint(name = "UQ_ADMIN_USUARIOS_EMAIL", columnNames = "EMAIL")
     },
     indexes = {
-        @Index(name = "IX_ADMIN_USUARIOS_STATUS_PERFIL", columnList = "STATUS_ACESSO, PERFIL")
+        @Index(name = "IX_ADMIN_USUARIOS_STATUS_PERFIL", columnList = "STATUS_ACESSO, PERFIL"),
+        @Index(name = "IX_ADMIN_USUARIOS_APROVADOR",     columnList = "APROVADO_POR_ID")
     }
 )
 @Comment("Projeção local de usuários do Auth service")
@@ -67,6 +68,16 @@ public class AdminUsuarios {
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS_ACESSO", length = 20, nullable = false)
     private StatusAcesso statusAcesso = StatusAcesso.ATIVO;
+
+    @Column(name = "APROVADO_PARA_MENTORIA", nullable = false)
+    private Boolean aprovadoParaMentoria = false;
+
+    @Column(name = "DATA_APROVACAO", columnDefinition = "DATETIME(3)")
+    private LocalDateTime dataAprovacao;
+
+    /** ID (interno) do admin que aprovou. FK para ADMIN_USUARIOS.ID */
+    @Column(name = "APROVADO_POR_ID")
+    private Long aprovadoPorId;
 
     @Column(name = "MOTIVO_SUSPENSAO", length = 500)
     private String motivoSuspensao;

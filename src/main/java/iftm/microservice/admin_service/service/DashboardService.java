@@ -21,7 +21,7 @@ public class DashboardService {
 
     long novosCadastros = repository.contarNovosCadastros(desde);
     long mentoriasPendentes = repository.contarMentoriasPendentes();
-    //falta o grupo decidir qual data define a mentoria realizada no mês
+    //falta decidir qual data define a mentoria realizada no mês
     long mentoriasRealizadasNoMes = 5;
     long mentoresPendentes = repository.contarMentoresPendentes();
     long vouchersAtivos = repository.contarVouchersAtivos(agora);
