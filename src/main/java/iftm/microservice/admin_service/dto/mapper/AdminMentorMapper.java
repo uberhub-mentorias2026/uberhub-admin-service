@@ -30,7 +30,7 @@ public interface AdminMentorMapper {
             return List.of();
         }
         return mentorTags.stream()
-                .map(mt -> mt.getTag().getName()) 
+                .map(mt -> mt.getTag().getNome()) 
                 .sorted()
                 .toList();
     }

@@ -28,7 +28,7 @@ public class AdminTagsDTO {
     public AdminTagsDTO(AdminTags adminTags) {
 
         this.tagUuid = adminTags.getTagUuid();
-        this.nome = adminTags.getName();
+        this.nome = adminTags.getNome();
         this.categoria = adminTags.getCategoria();
         this.status = adminTags.getStatus();
         

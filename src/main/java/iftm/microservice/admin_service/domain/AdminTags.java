@@ -38,7 +38,7 @@ public class AdminTags {
     private String tagUuid;
 
     @Column(name = "NOME", nullable = false, length = 120)
-    private String name;
+    private String nome;
 
     @Column(name = "CATEGORIA", length = 100)
     private String categoria;
